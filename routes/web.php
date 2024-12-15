@@ -48,6 +48,9 @@ Route::group(['middleware' => ['auth', 'checkRole:guru']], function () {
     Route::resource('tugas', TugasController::class);
     Route::get('/jawaban-download/{id}', [TugasController::class, 'downloadJawaban'])->name('guru.jawaban.download');
     Route::resource('latihan_soal', LatihanSoalController::class);
+    Route::get('/cek-jawaban-latihan/{id}', [LatihanSoalController::class, 'cekJawabanLatihan'])->name('cek-jawaban-latihan');
+    Route::get('/jawaban-latihan/{id}/{id_siswa}', [LatihanSoalController::class, 'jawabanLatihan'])->name('jawaban-latihan');
+    Route::post('/update-nilai-latihan/{id}', [LatihanSoalController::class, 'updateNilaiLatihan'])->name('update-nilai-latihan');
 });
 Route::group(['middleware' => ['auth', 'checkRole:siswa']], function () {
     Route::get('/siswa/dashboard', [HomeController::class, 'siswa'])->name('siswa.dashboard');
@@ -56,6 +59,10 @@ Route::group(['middleware' => ['auth', 'checkRole:siswa']], function () {
     Route::get('/siswa/tugas', [TugasController::class, 'siswa'])->name('siswa.tugas');
     Route::get('/tugas-download/{id}', [TugasController::class, 'download'])->name('siswa.tugas.download');
     Route::post('/kirim-jawaban', [TugasController::class, 'kirimJawaban'])->name('kirim-jawaban');
+    
+    Route::resource('latihan', LatihanSoalController::class);
+    Route::post('/kirim-jawaban-latihan/{id}', [LatihanSoalController::class, 'storeJawaban'])->name('kirim-jawaban-latihan');
+
 });
 Route::group(['middleware' => ['auth', 'checkRole:orangtua']], function () {
     Route::get('/orangtua/dashboard', [HomeController::class, 'orangtua'])->name('orangtua.dashboard');
