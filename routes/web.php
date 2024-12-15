@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth', 'checkRole:guru']], function () {
     Route::resource('latihan_soal', LatihanSoalController::class);
     Route::get('/cek-jawaban-latihan/{id}', [LatihanSoalController::class, 'cekJawabanLatihan'])->name('cek-jawaban-latihan');
     Route::get('/jawaban-latihan/{id}/{id_siswa}', [LatihanSoalController::class, 'jawabanLatihan'])->name('jawaban-latihan');
+    Route::get('/cek-jawaban-latihan/{id}', [LatihanSoalController::class, 'cekJawabanLatihan'])->name('cek-jawaban-latihan');
     Route::post('/update-nilai-latihan/{id}', [LatihanSoalController::class, 'updateNilaiLatihan'])->name('update-nilai-latihan');
 });
 Route::group(['middleware' => ['auth', 'checkRole:siswa']], function () {
