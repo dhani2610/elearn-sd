@@ -38,10 +38,10 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="kelas_id">Kelas</label>
+                                    <label for="kelas_id">Mata Pelajaran</label>
                                     <select id="kelas_id" name="id_pelajaran"
                                         class="select2 form-control @error('id_pelajaran') is-invalid @enderror">
-                                        <option value="">-- Pilih Kelas --</option>
+                                        <option value="">-- Pilih Mata Pelajaran --</option>
                                         @foreach ($mapel as $m)
                                             <option value="{{ $m->id }}">{{ $m->nama_mapel }}</option>
                                         @endforeach
