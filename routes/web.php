@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\LatihanSoalController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\MateriController;
 use App\Http\Controllers\PengaturanController;
@@ -46,6 +47,7 @@ Route::group(['middleware' => ['auth', 'checkRole:guru']], function () {
     Route::resource('materi', MateriController::class);
     Route::resource('tugas', TugasController::class);
     Route::get('/jawaban-download/{id}', [TugasController::class, 'downloadJawaban'])->name('guru.jawaban.download');
+    Route::resource('latihan_soal', LatihanSoalController::class);
 });
 Route::group(['middleware' => ['auth', 'checkRole:siswa']], function () {
     Route::get('/siswa/dashboard', [HomeController::class, 'siswa'])->name('siswa.dashboard');
