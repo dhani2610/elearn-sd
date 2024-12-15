@@ -9,8 +9,11 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <h4>List Latihan Soal</h4>
-                            <a href="{{ route('latihan_soal.create') }}" class="btn btn-primary"><i
-                                    class="nav-icon fas fa-folder-plus"></i>&nbsp; Tambah Latihan Soal</a>
+                            @if (Auth::user()->roles == 'guru')
+                                <a href="{{ route('latihan_soal.create') }}" class="btn btn-primary"><i
+                                        class="nav-icon fas fa-folder-plus"></i>&nbsp; Tambah Latihan Soal</a>
+                            @endif
+
                         </div>
                         <div class="card-body">
                             @include('partials.alert')
@@ -22,7 +25,7 @@
                                             <th>Judul</th>
                                             <th>Mata Pelajaran</th>
                                             @if (Auth::user()->roles != 'guru')
-                                            <th>Nilai</th>
+                                                <th>Nilai</th>
                                             @endif
                                             <th>Aksi</th>
                                         </tr>
@@ -34,28 +37,29 @@
                                                 <td>{{ $data->judul }}</td>
                                                 <td>{{ $data->mapel->nama_mapel }}</td>
                                                 @if (Auth::user()->roles != 'guru')
-                                                <td>
-                                                    @php
-                                                        $cekskor = App\Models\JawabanLatihan::where(
-                                                            'id_latihan_soal',
-                                                            $data->id,
-                                                        )
-                                                            ->where('id_siswa', Auth::user()->id)
-                                                            ->get();
-                                                    @endphp
-                                                    @if (count($cekskor) == 0)
-                                                        0
-                                                    @else
-                                                        {{ $cekskor->sum('skor') }}
-                                                    @endif
-                                                </td>
+                                                    <td>
+                                                        @php
+                                                            $cekskor = App\Models\JawabanLatihan::where(
+                                                                'id_latihan_soal',
+                                                                $data->id,
+                                                            )
+                                                                ->where('id_siswa', Auth::user()->id)
+                                                                ->get();
+                                                        @endphp
+                                                        @if (count($cekskor) == 0)
+                                                            0
+                                                        @else
+                                                            {{ $cekskor->sum('skor') }}
+                                                        @endif
+                                                    </td>
                                                 @endif
                                                 <td>
                                                     <div class="d-flex">
                                                         @if (Auth::user()->roles == 'guru')
                                                             <a href="{{ route('cek-jawaban-latihan', $data->id) }}"
                                                                 class="btn btn-primary btn-sm mr-2"><i
-                                                                    class="nav-icon fas fa-edit"></i> &nbsp; Lihat Jawaban</a>
+                                                                    class="nav-icon fas fa-edit"></i> &nbsp; Lihat
+                                                                Jawaban</a>
 
                                                             <a href="{{ route('latihan_soal.edit', $data->id) }}"
                                                                 class="btn btn-success btn-sm"><i
@@ -76,7 +80,7 @@
                                                                     class="btn btn-success btn-sm"><i
                                                                         class="nav-icon fas fa-edit"></i> &nbsp; Jawab</a>
                                                             @else
-                                                            Tidak Ada Aksi
+                                                                Tidak Ada Aksi
                                                             @endif
                                                         @endif
                                                     </div>
