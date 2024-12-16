@@ -46,11 +46,9 @@ class SiswaController extends Controller
             'nis' => 'required|unique:siswas',
             'telp' => 'required',
             'alamat' => 'required',
-            'kelas_id' => 'required|unique:siswas',
             'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ], [
             'nis.unique' => 'NIS sudah terdaftar',
-            'kelas_id.unique' => 'Siswa sudah terdaftar di kelas ini',
         ]);
 
         if (isset($request->foto)) {
@@ -67,6 +65,7 @@ class SiswaController extends Controller
         $siswa->kelas_id = $request->kelas_id;
         $siswa->foto = $foto;
         $siswa->save();
+
 
 
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil ditambahkan');

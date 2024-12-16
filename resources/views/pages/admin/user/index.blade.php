@@ -23,6 +23,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Email User</th>
                                             <th>Nama User</th>
                                             <th>Roles</th>
                                             <th>Aksi</th>
@@ -170,7 +171,7 @@
                 <label for="siswa">Daftar Siswa</label>
                 <select id="siswa" name="siswa[]" class="select2 form-control" multiple="multiple">
                     @foreach ($siswaList as $siswa)
-                        <option value="{{ $siswa->id }}" {{ in_array($siswa->id, old('siswa', [])) ? 'selected' : '' }}>{{ $siswa->user->name }}</option>
+                        <option value="{{ $siswa->id }}" {{ in_array($siswa->id, old('siswa', [])) ? 'selected' : '' }}>{{ $siswa->user->name ?? '-' }}</option>
                     @endforeach
                 </select>
             `);

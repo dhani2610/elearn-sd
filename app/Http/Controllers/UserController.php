@@ -23,6 +23,7 @@ class UserController extends Controller
     {
         $user = User::OrderBy('roles', 'asc')->get();
         $siswaList = Siswa::with('user')->OrderBy('id', 'asc')->get();
+        // dd($siswaList);
         return view('pages.admin.user.index', compact('user', 'siswaList'));
     }
 
@@ -66,7 +67,7 @@ class UserController extends Controller
                     User::create([
                         'name' => $guru->nama,
                         'email' => $request->email,
-                        'password' => Hash::make($request->password),
+                        'password' => Hash::make($request->nip),
                         'roles' => $request->roles,
                         'nip' => $request->nip
                     ]);
@@ -92,7 +93,7 @@ class UserController extends Controller
                     User::create([
                         'name' => $siswa->nama,
                         'email' => $request->email,
-                        'password' => Hash::make($request->password),
+                        'password' => Hash::make($request->nis),
                         'roles' => $request->roles,
                         'nis' => $request->nis
                     ]);

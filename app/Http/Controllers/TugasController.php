@@ -168,9 +168,8 @@ class TugasController extends Controller
         $guru = Guru::findOrFail($kelas->guru_id);
 
         // Get jawaban from tugas
-        $jawaban = Jawaban::where('siswa_id', $siswa->id)->get();
 
-        return view('pages.siswa.tugas.index', compact('tugas', 'guru', 'kelas', 'jawaban'));
+        return view('pages.siswa.tugas.index', compact('tugas', 'guru', 'kelas'));
     }
 
     public function orangtua()

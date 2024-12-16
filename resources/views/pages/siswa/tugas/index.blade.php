@@ -32,6 +32,10 @@
                                         <td>{{ $tugas->guru->mapel->nama_mapel }}</td>
                                         <td>
                                             <div class="d-flex">
+                                                @php
+                                                    $siswa = \App\Models\Siswa::where('nis', Auth::user()->nis)->first();
+                                                    $jawaban = \App\Models\Jawaban::where('tugas_id',$tugas->id)->where('siswa_id', $siswa->id)->get();
+                                                @endphp
                                                 @if ($jawaban->count() > 0)
                                                 {{-- Hiding button --}}
                                                 @else
