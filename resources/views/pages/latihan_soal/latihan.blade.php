@@ -2,6 +2,49 @@
 @section('title', 'Ujian Online')
 
 @section('content')
+{{-- <style>
+    .option-container {
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .option-checkbox {
+        display: none;
+    }
+
+    .option-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        /* background-color: #f8f9fa; */
+        background-color: #0056b3!important;
+        border: 2px solid #007bff;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .option-checkbox:checked+label .option-btn {
+        background-color: #007bff;
+        color: white;
+        transform: scale(1.1);
+    }
+
+    .option-checkbox:checked+label .option-btn:active {
+        transform: scale(1);
+        color: white;
+        background-color: #0056b3!important;
+    }
+
+    .option-checkbox:checked+label .option-btn:hover {
+        color: white;
+        background-color: #0056b3;
+    }
+    .option-btn:active {
+        color: white!important;
+        background-color: #0056b3!important;
+    }
+</style> --}}
+
     <section class="section custom-section">
         <div class="section-body">
             <div class="row">
@@ -29,85 +72,27 @@
                                     <div class="col-9">
                                         <div id="question-container">
                                             @foreach ($questions->soals as $key => $question)
-                                                <div class="question" id="question-{{ $question->id }}"
-                                                    style="display: none;">
+                                                <div class="question" id="question-{{ $question->id }}" style="display: none;">
                                                     <h5>{{ $question->pertanyaan }}</h5>
                                                     @if ($question->tipe_soal === 'pilihan_ganda')
                                                         <div class="form-group">
-                                                            @php
-                                                                $pil = 'A';
-                                                            @endphp
+                                                            @php $pil = 'A'; @endphp
                                                             @foreach ($question->pilihan as $optionKey => $option)
                                                                 <div class="option-container">
-                                                                    <input type="checkbox" class="option-checkbox"
-                                                                        name="answers[{{ $question->id }}][]"
+                                                                    <input type="radio" class="option-radio"
+                                                                        name="answers[{{ $question->id }}]"
                                                                         value="Opsi {{ $pil }}"
                                                                         id="option-{{ $question->id }}-{{ $optionKey }}"
-                                                                        {{ isset($question->answered) && in_array($optionKey, explode(',', $question->answered)) ? 'checked' : '' }}>
-
-                                                                    <label
-                                                                        for="option-{{ $question->id }}-{{ $optionKey }}">
-                                                                        <span class="option-btn">
+                                                                        {{ isset($question->answered) && $question->answered == $optionKey ? 'checked' : '' }}>
+                                        
+                                                                    <label for="option-{{ $question->id }}-{{ $optionKey }}">
+                                                                        <button class="option-btn btn btn-primary" type="button">
                                                                             {{ $pil++ }}. {{ $option }}
-                                                                        </span>
+                                                                        </button>
                                                                     </label>
                                                                 </div>
                                                             @endforeach
                                                         </div>
-
-                                                        <style>
-                                                            .option-container {
-                                                                display: inline-block;
-                                                                margin: 5px;
-                                                            }
-
-                                                            .option-checkbox {
-                                                                display: none;
-                                                            }
-
-                                                            .option-btn {
-                                                                display: inline-block;
-                                                                padding: 10px 20px;
-                                                                background-color: #f8f9fa;
-                                                                border: 2px solid #007bff;
-                                                                border-radius: 5px;
-                                                                cursor: pointer;
-                                                                transition: background-color 0.3s, transform 0.3s;
-                                                            }
-
-                                                            .option-checkbox:checked+label .option-btn {
-                                                                background-color: #007bff;
-                                                                color: black;
-                                                                transform: scale(1.1);
-                                                            }
-
-                                                            .option-checkbox:checked+label .option-btn:active {
-                                                                transform: scale(1);
-                                                                color: black;
-                                                            }
-
-                                                            .option-btn:hover {
-                                                                background-color: silver;
-                                                            }
-
-                                                            .option-checkbox:checked+label .option-btn:hover {
-                                                                color: black;
-                                                                background-color: #0056b3;
-                                                            }
-                                                        </style>
-
-                                                        <script>
-                                                            document.querySelectorAll('.option-checkbox').forEach(function(checkbox) {
-                                                                checkbox.addEventListener('change', function() {
-                                                                    const checkboxes = document.querySelectorAll('.option-checkbox');
-                                                                    checkboxes.forEach(function(otherCheckbox) {
-                                                                        if (otherCheckbox !== checkbox) {
-                                                                            otherCheckbox.checked = false; // Uncheck all other checkboxes
-                                                                        }
-                                                                    });
-                                                                });
-                                                            });
-                                                        </script>
                                                     @elseif($question->tipe_soal === 'essay')
                                                         <div class="form-group">
                                                             <textarea class="form-control" name="answers[{{ $question->id }}]" rows="4">{{ $question->answered ? $question->answered_text : '' }}</textarea>
@@ -116,6 +101,7 @@
                                                 </div>
                                             @endforeach
                                         </div>
+                                        
                                         <div class="navigation-buttons">
                                             <button type="button" id="prev-btn" class="btn btn-danger">Previous</button>
                                             <button type="button" id="next-btn" class="btn btn-success">Next</button>
@@ -182,41 +168,53 @@
                     var questionId = button.data("question-id");
                     var optionId = button.data("option-id");
                     var checkbox = $("#option-" + questionId + "-" +
-                    optionId); // Mencari checkbox yang sesuai
+                        optionId); // Mencari checkbox yang sesuai
 
                     // Toggle status checkbox
                     if (checkbox.is(":checked")) {
                         checkbox.prop("checked", false); // Hapus centang
                         button.removeClass("btn-primary").addClass(
-                        "btn-outline-primary"); // Ubah gaya tombol
+                            "btn-outline-primary"); // Ubah gaya tombol
                     } else {
                         checkbox.prop("checked", true); // Centang checkbox
                         button.removeClass("btn-outline-primary").addClass(
-                        "btn-primary"); // Ubah gaya tombol
+                            "btn-primary"); // Ubah gaya tombol
                     }
                 });
             });
 
 
-            // Form validation before submission
             $('#quizForm').submit(function(event) {
                 let allAnswered = true;
-                $('textarea, input[type="checkbox"]').each(function() {
-                    const questionId = $(this).closest('.question').attr('id').replace('question-',
-                        '');
-                    const questionBtn = $('.question-btn[data-id="' + questionId + '"]');
 
-                    if ($(this).is('textarea') && !$(this).val()) {
-                        allAnswered = false;
-                        questionBtn.css('background-color', '#d6d6d6');
-                    } else if ($(this).is('input[type="checkbox"]') && !$('input[name="answers[' +
-                            questionId + '][]"]:checked').length) {
-                        allAnswered = false;
-                        questionBtn.css('background-color', '#d6d6d6');
-                    } else {
-                        questionBtn.css('background-color', '#007bff');
+                $('.question').each(function() {
+                    const $question = $(this);
+                    const questionId = $question.attr('id').replace('question-', '');
+                    const questionBtn = $('.question-btn[data-id="' + questionId + '"]');
+                    console.log();
+                    
+                    // Cek apakah pertanyaan bertipe checkbox atau textarea
+                    if ($question.find('input[type="checkbox"]').length > 0) {
+                        // Validasi untuk pilihan ganda (checkbox)
+                        if ($question.find('input[type="checkbox"]:checked').length === 0) {
+                            allAnswered = false;
+                            questionBtn.css('background-color', '#d6d6d6'); // Indikator error
+                        } else {
+                            questionBtn.css('background-color', '#007bff'); // Indikator valid
+                        }
+                    } else if ($question.find('textarea').length > 0) {
+                        // Validasi untuk soal essay (textarea)
+                        const answer = $question.find('textarea').val().trim();
+                        if (answer === '') {
+                            allAnswered = false;
+                            questionBtn.css('background-color', '#d6d6d6'); // Indikator error
+                        } else {
+                            questionBtn.css('background-color', '#007bff'); // Indikator valid
+                        }
                     }
                 });
+
+                console.log('All answered:', allAnswered);
 
                 if (!allAnswered) {
                     event.preventDefault();
