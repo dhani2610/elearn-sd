@@ -39,10 +39,10 @@ class KelasController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'nama_kelas' => 'required|unique:kelas',
-            'guru_id' => 'required|unique:kelas'
+            'guru_id' => 'required|unique:kelas',
+            'jurusan_id' => 'required'
         ], [
             'nama_kelas.unique' => 'Nama Kelas sudah ada',
             'guru_id.unique' => 'Guru sudah memiliki kelas'

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Guru;
 use App\Models\Jadwal;
 use App\Models\JawabanLatihan;
+use App\Models\Kelas;
 use App\Models\LatihanSoal;
 use App\Models\Mapel;
 use App\Models\Soal;
@@ -26,7 +27,7 @@ class LatihanSoalController extends Controller
         $g = Guru::where('user_id', Auth::user()->id)->first();
         $data['guru'] = Guru::where('user_id', Auth::user()->id)->get();
         $data['mapel'] = Mapel::OrderBy('nama_mapel', 'asc')->get();
-        $data['jadwal'] = Jadwal::where('mapel_id', $g->mapel_id)->get();
+        $data['jadwal'] = Kelas::all();
 
         return view('pages.latihan_soal.create', $data);
     }
@@ -176,7 +177,7 @@ class LatihanSoalController extends Controller
         $g = Guru::where('user_id', Auth::user()->id)->first();
         $data['guru'] = Guru::where('user_id', Auth::user()->id)->get();
         $data['mapel'] = Mapel::OrderBy('nama_mapel', 'asc')->get();
-        $data['jadwal'] = Jadwal::where('mapel_id', $g->mapel_id)->get();
+        $data['jadwal'] = Kelas::all();
         $data['latihanSoal'] = $latihanSoal;
 
         return view('pages.latihan_soal.edit', $data);

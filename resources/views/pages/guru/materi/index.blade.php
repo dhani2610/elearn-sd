@@ -49,6 +49,7 @@
                     </div>
                 </div>
             </div>
+            {{-- @dd($jadwal) --}}
             <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -80,7 +81,7 @@
                                             <select id="kelas_id" name="kelas_id" class="select2 form-control @error('kelas_id') is-invalid @enderror">
                                                 <option value="">-- Pilih Kelas --</option>
                                                 @foreach ($jadwal as $data )
-                                                <option value="{{ $data->kelas_id }}">{{ $data->kelas->nama_kelas }}</option>
+                                                <option value="{{ $data->id }}">{{ $data->nama_kelas }} </option>
                                                 @endforeach
                                             </select>
                                         </div>

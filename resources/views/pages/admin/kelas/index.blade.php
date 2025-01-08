@@ -73,6 +73,7 @@
                                                     </div>
                                                 </div>
                                             @endif
+                                            <input type="hidden" name="jurusan_id" value="1">
                                             <div class="form-group">
                                                 <label for="nama_kelas">Nama Kelas</label>
                                                 <input type="text" id="nama_kelas" name="nama_kelas" class="form-control @error('nama_kelas') is-invalid @enderror" placeholder="{{ __('Nama Kelas') }}">

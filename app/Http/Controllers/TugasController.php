@@ -27,7 +27,8 @@ class TugasController extends Controller
     {
         $guru = Guru::where('user_id', Auth::user()->id)->first();
         $tugas = Tugas::where('guru_id', $guru->id)->get();
-        $jadwal = Jadwal::where('mapel_id', $guru->mapel_id)->get();
+        // $jadwal = Jadwal::where('mapel_id', $guru->mapel_id)->get();
+        $jadwal = Kelas::all();
 
         return view('pages.guru.tugas.index', compact('tugas', 'jadwal'));
     }

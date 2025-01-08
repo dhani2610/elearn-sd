@@ -32,7 +32,7 @@
                                         class="select2 form-control @error('id_kelas') is-invalid @enderror">
                                         <option value="">-- Pilih Kelas --</option>
                                         @foreach ($jadwal as $data)
-                                            <option value="{{ $data->kelas_id }}">{{ $data->kelas->nama_kelas }}</option>
+                                            <option value="{{ $data->id }}">{{ $data->nama_kelas }}</option>
                                         @endforeach
                                     </select>
                                 </div>

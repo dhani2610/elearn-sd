@@ -55,7 +55,6 @@ class HomeController extends Controller
         $jadwal = Jadwal::where('mapel_id', $guru->mapel_id)->get();
         $tugas = Tugas::where('guru_id', $guru->id)->count();
         $hari = Carbon::now()->locale('id')->isoFormat('dddd');
-
         return view('pages.guru.dashboard', compact('guru', 'materi', 'jadwal', 'hari', 'tugas'));
     }
 

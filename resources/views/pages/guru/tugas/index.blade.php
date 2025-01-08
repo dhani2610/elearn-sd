@@ -79,7 +79,7 @@
                                             <select id="kelas_id" name="kelas_id" class="select2 form-control @error('kelas_id') is-invalid @enderror">
                                                 <option value="">-- Pilih Kelas --</option>
                                                 @forelse ($jadwal as $data )
-                                                <option value="{{ $data->kelas_id }}">{{ $data->kelas->nama_kelas }}</option>
+                                                <option value="{{ $data->id }}">{{ $data->nama_kelas }}</option>
                                                 @empty
                                                 <option value="" disabled>Tidak ada kelas yang diajar</option>
                                                 @endforelse

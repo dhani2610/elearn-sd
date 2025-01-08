@@ -36,9 +36,9 @@
                                         class="select2 form-control @error('id_kelas') is-invalid @enderror">
                                         <option value="">-- Pilih Kelas --</option>
                                         @foreach ($jadwal as $data)
-                                            <option value="{{ $data->kelas_id }}"
-                                                {{ $latihanSoal->id_kelas == $data->kelas_id ? 'selected' : '' }}>
-                                                {{ $data->kelas->nama_kelas }}
+                                            <option value="{{ $data->id }}"
+                                                {{ $latihanSoal->id_kelas == $data->id ? 'selected' : '' }}>
+                                                {{ $data->nama_kelas }}
                                             </option>
                                         @endforeach
                                     </select>

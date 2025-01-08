@@ -33,6 +33,7 @@
                                         @foreach ($user as $result => $data)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $data->email }}</td>
                                                 <td>{{ $data->name }}</td>
                                                 <td>{{ $data->roles }}</td>
                                                 <td>
